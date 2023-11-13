@@ -1,0 +1,26 @@
+<html>
+    <head>modulo compilabile
+        <script>https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js</script>
+        <script>
+            function generatePDF(){
+                // test
+                alert('ciao');
+                const doc = new jsPDF();
+                const name =  
+                    document.getElementById('name').value;
+                    // Aggiungi il tsto nel PDF
+                    doc.text(20, 20, 'Nome: ${name}');
+        
+                    // Salva il PDF
+                    doc.save('mioPDF.pdf');
+            }
+        </script>
+    </head>
+    <body>
+        <form id="myForm">
+            <lable for="name">Nome:</lable>
+            <input type="text" id="name" name="name" placeholder="nome">
+            <button type="button" onclick="generatePDF()">Genera PDF</button>
+        </form>
+    </body>
+</html>
