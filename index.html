@@ -12,6 +12,8 @@
                 <input type="text" id="name" name="name" placeholder="Scrivi il nome" required>
                 <label for="surname">Cognome:</label>
                 <input type="text" id="surname" name="surname" placeholder="Scrivi il cognome" required>
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" placeholder="Scrivi il tuo indirizzo email" required>
                 <button type="button" onclick="generateAndDownloadPDF()">Genera PDF</button>
             </form>
         </div>
@@ -22,14 +24,16 @@
             function generateAndDownloadPDF() {
                 const nameInput = document.getElementById('name').value;
                 const surnameInput = document.getElementById('surname').value;
+                const emailInput = document.getElementById('email').value;
 
                 // test in console
-                console.log(nameInput + ' ' + surnameInput);
+                console.log(nameInput + ' ' + surnameInput + ' ' + email);
 
                 const doc = new jsPDF();
 
                 doc.text(20, 20, 'Nome: ' + nameInput);
                 doc.text(20, 40, 'Cognome: ' + surnameInput);
+                doc.text(20, 60, 'Email: ' + emailInput);
                 doc.save('mioPDF.pdf');
 
                 const overlay = document.getElementById('overlay');
