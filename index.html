@@ -1,46 +1,44 @@
+<!DOCTYPE html>
 <html>
-    <title>modulo compilabile online</title>
     <head>
+        <title>modulo compilabile online</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <div class="container">
             <form id="myForm">
-                <lable for="name">Nome:</lable>
-                <input type="text" id="name" name="name" placeholder="nome" required>
-                <lable for="lastname">Cognome:</lable>
-                <input type="text" id="lastname" name="lastname" placeholder="cognome" required>
-                <button type="button" onclick="generatePDF()">Genera PDF</button>
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" placeholder="Scrivi il nome" required>
+                <label for="surname">Cognome:</label>
+                <input type="text" id="surname" name="surname" placeholder="Scrivi il cognome" required>
+                <button type="button" onclick="generateAndDownloadPDF()">Genera PDF</button>
             </form>
         </div>
         <div class="overlay" id="overlay">
-            <div class="message">FIle creato e scaricato</div>
+            <div class="message">File creato e scaricato</div>
         </div>
-    </body>
-    <script>
-        function generatePDF(){
-            // test
-            //alert('ciao');
-            const doc = new jsPDF();
-            const name = document.getElementById('name').value;
-            const lastname = document.getElementById('lastname').value;
+        <script>
+            function generateAndDownloadPDF() {
+                const nameInput = document.getElementById('name').value;
+                const surnameInput = document.getElementById('surname').value;
 
-                // Aggiungi il tsto nel PDF
-                doc.text(20, 20, 'Nome: ' + name);
-                doc.text(20, 40, 'Cognome: ' + lastname);
-    
-                // Salva il PDF
+                // test in console
+                console.log(nameInput + ' ' + surnameInput);
+
+                const doc = new jsPDF();
+
+                doc.text(20, 20, 'Nome: ' + nameInput);
+                doc.text(20, 40, 'Cognome: ' + surnameInput);
                 doc.save('mioPDF.pdf');
 
-                // Comunica all'utente che il file è stato creato e scaricato
-                const overlay = document.getElementById("overlay");
-                overlay.style.display='block';
+                const overlay = document.getElementById('overlay');
+                overlay.style.display = 'block';
 
-                // Nasconde il msg dopo 3 sec
-                setTimeout(function(){
-                    overlay.style.display='none'; 
-                }, 3000)
-        }
-    </script>
+                setTimeout(function() {
+                    overlay.style.display = 'none';
+                }, 3000);
+            }
+        </script>
+    </body>
 </html>
