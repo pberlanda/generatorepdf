@@ -27,7 +27,9 @@
                 const nameInput = document.getElementById('name').value;
                 const surnameInput = document.getElementById('surname').value;
                 const emailInput = document.getElementById('email').value;
-                const dataNascitaInput = document.getElementById('birthdate').value;
+
+                var tmpData = document.getElementById('birthdate').value;
+                const dataNascitaInput = formattaData(tmpData);
 
                 // test in console
                 console.log(nameInput + ' ' + surnameInput + ' ' + emailInput + ' ' + dataNascitaInput);
@@ -73,6 +75,28 @@
                 setTimeout(function() {
                     overlay.style.display = 'none';
                 }, 2000);
+            }
+
+            function formattaData(date) {
+                var tmpDate = new Date(date);
+
+                var giorno = tmpDate.getDay();
+                var mese = tmpDate.getMonth() + 1;
+                var anno = tmpDate.getFullYear();
+
+                if (giorno < 10) {
+                    giorno = '0' + giorno;
+                }
+
+                if (mese < 10) {
+                    mese = '0' + mese;
+                }
+
+                var formattedDate;
+
+                formattedDate = giorno + '/' + mese + '/' + anno;
+
+                return formattedDate;
             }
         </script>
     </body>
