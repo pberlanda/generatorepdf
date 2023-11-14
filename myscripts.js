@@ -73,3 +73,24 @@ function formattaData(date) {
 
     return formattedDate;
 }
+
+function fillAndDownloadPDF() {
+
+    const name = document.getElementById('name').value;
+    const surname = document.getElementById('surname').value;
+
+    // carica il modulo PDF da compilare
+    fetch('modulo.pdf')
+        .then(response => response.arrayBuffer())
+        .then(data => {
+            const pdfDoc = new jsPDF();
+            pdfDoc.loadFile(data);
+
+            // compila i campi del modulo
+            pdfDoc.setFormValue('nome', name);
+            pdfDoc.setFormValue('cognome', surname);
+
+            // salva il PDF compilato, provo con un altro nome file
+            pdfDoc.save('modulo_' + name + '_' + surname + '.pdf');
+        })
+}
