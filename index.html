@@ -14,6 +14,8 @@
                 <input type="text" id="surname" name="surname" placeholder="Scrivi il cognome" required>
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" placeholder="Scrivi il tuo indirizzo email" required>
+                <label for="birthdate">Data di nascita:</label>
+                <input type="date" id="birthdate" name="birthdate" required>
                 <button type="button" onclick="generateAndDownloadPDF()">Genera PDF</button>
             </form>
         </div>
@@ -25,9 +27,10 @@
                 const nameInput = document.getElementById('name').value;
                 const surnameInput = document.getElementById('surname').value;
                 const emailInput = document.getElementById('email').value;
+                const dataNascitaInput = document.getElementById('birthdate').value;
 
                 // test in console
-                console.log(nameInput + ' ' + surnameInput + ' ' + email);
+                console.log(nameInput + ' ' + surnameInput + ' ' + emailInput + ' ' + dataNascitaInput);
 
                 // nome e cognome devono essere immessi
                 if (nameInput === '') {
@@ -49,11 +52,19 @@
                     alert('Email non immessa oppure non valida');
                     return false;
                 }
+
+                // data di nascita
+                if (!dataNascitaInput === '') {
+                    alert('Data non selezionata');
+                    return false;
+                }
+
                 const doc = new jsPDF();
 
                 doc.text(20, 20, 'Nome: ' + nameInput);
                 doc.text(20, 40, 'Cognome: ' + surnameInput);
                 doc.text(20, 60, 'Email: ' + emailInput);
+                doc.text(20, 80, 'Data di nascita: ' + dataNascitaInput);
                 doc.save('mioPDF.pdf');
 
                 const overlay = document.getElementById('overlay');

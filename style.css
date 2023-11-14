@@ -28,6 +28,14 @@ input[type="email"] {
     border-radius: 5px;
 }
 
+input[type="date"] {
+    /* width: 100%; */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 button {
     padding: 10px 20px;
     background-color: #3498db;
