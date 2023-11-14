@@ -74,23 +74,35 @@ function formattaData(date) {
     return formattedDate;
 }
 
-function fillAndDownloadPDF() {
+async function compilaPDF() {
+    const name = document.getElementById('2name').value;
+    const surname = document.getElementById('2surname').value;
 
-    const name = document.getElementById('name').value;
-    const surname = document.getElementById('surname').value;
+    // Carica il modulo PDF da compilare
+    const response = await fetch('modulo.pdf');
+    const data = await response.arrayBuffer();
 
-    // carica il modulo PDF da compilare
-    fetch('modulo.pdf')
-        .then(response => response.arrayBuffer())
-        .then(data => {
-            const pdfDoc = new jsPDF();
-            pdfDoc.loadFile(data);
+    // Carica il PDF con pdf-lib
+    const { PDFDocument } = PDFLib;
+    const pdfDoc = await PDFDocument.load(data);
 
-            // compila i campi del modulo
-            pdfDoc.setFormValue('nome', name);
-            pdfDoc.setFormValue('cognome', surname);
+    // Compila i campi del modulo PDF con i valori del modulo HTML
+    const form = pdfDoc.getForm();
 
-            // salva il PDF compilato, provo con un altro nome file
-            pdfDoc.save('modulo_' + name + '_' + surname + '.pdf');
-        })
+    console.log(name + ' ' + surname);
+
+    form.getTextField('nome').setText(name);
+    form.getTextField('cognome').setText(surname);
+
+    // Salva il PDF compilato
+    const pdfBytes = await pdfDoc.save();
+
+    // Crea un oggetto Blob dal byte del PDF
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+    // Crea un link temporaneo e simula il clic per il download
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = 'modulo_compilato.pdf';
+    link.click();
 }
