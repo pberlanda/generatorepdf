@@ -78,6 +78,7 @@ async function compilaPDF() {
     const name = document.getElementById('2name').value;
     const surname = document.getElementById('2surname').value;
     const email = document.getElementById('2email').value;
+    const luogoNascita = document.getElementById('2luogoNascita').value;
 
     // Carica il modulo PDF da compilare
     const response = await fetch('modulo.pdf');
@@ -95,6 +96,7 @@ async function compilaPDF() {
     form.getTextField('nome').setText(name);
     form.getTextField('cognome').setText(surname);
     form.getTextField('email').setText(email);
+    form.getTextField('luogoNascita').setText(luogoNascita);
 
     // Salva il PDF compilato
     const pdfBytes = await pdfDoc.save();
