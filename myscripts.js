@@ -1,9 +1,9 @@
 function generateAndDownloadPDF() {
-    const nameInput = document.getElementById('name').value;
-    const surnameInput = document.getElementById('surname').value;
-    const emailInput = document.getElementById('email').value;
+    const nameInput = document.getElementById('1name').value;
+    const surnameInput = document.getElementById('1surname').value;
+    const emailInput = document.getElementById('1email').value;
 
-    var tmpData = document.getElementById('birthdate').value;
+    var tmpData = document.getElementById('1birthdate').value;
     const dataNascitaInput = formattaData(tmpData);
 
     // test in console
@@ -12,13 +12,13 @@ function generateAndDownloadPDF() {
     // nome e cognome devono essere immessi
     if (nameInput === '') {
         alert('Inserisci il nome');
-        document.getElementById('name').focus();
+        document.getElementById('1name').focus();
         return false;
     }
 
     if (surnameInput === '') {
         alert('Inserisci il cognome');
-        document.getElementById('surname').focus();
+        document.getElementById('1surname').focus();
         return false;
     }
 
@@ -77,6 +77,7 @@ function formattaData(date) {
 async function compilaPDF() {
     const name = document.getElementById('2name').value;
     const surname = document.getElementById('2surname').value;
+    const email = document.getElementById('2email').value;
 
     // Carica il modulo PDF da compilare
     const response = await fetch('modulo.pdf');
@@ -89,10 +90,11 @@ async function compilaPDF() {
     // Compila i campi del modulo PDF con i valori del modulo HTML
     const form = pdfDoc.getForm();
 
-    console.log(name + ' ' + surname);
+    console.log(name + ' ' + surname + ' ' + email);
 
     form.getTextField('nome').setText(name);
     form.getTextField('cognome').setText(surname);
+    form.getTextField('email').setText(email);
 
     // Salva il PDF compilato
     const pdfBytes = await pdfDoc.save();
