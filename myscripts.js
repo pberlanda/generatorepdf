@@ -1,24 +1,27 @@
 function generateAndDownloadPDF() {
-    const nameInput = document.getElementById('1name').value;
-    const surnameInput = document.getElementById('1surname').value;
-    const emailInput = document.getElementById('1email').value;
+    const nameInput = document.getElementById('form1_name').value;
+    const surnameInput = document.getElementById('form1_username').value;
+    let emailInput;
+    emailInput = document.getElementById('form1_email').value;
 
-    var tmpData = document.getElementById('1birthdate').value;
-    const dataNascitaInput = formattaData(tmpData);
+    let dataNascitaInput;
+    dataNascitaInput = formattaData(document.getElementById('form1_birthday').value);
+
+    console.log(dataNascitaInput + ' checkpoint');
 
     // test in console
-    console.log(nameInput + ' ' + surnameInput + ' ' + emailInput + ' ' + dataNascitaInput);
+    console.log(nameInput + ' ' + surnameInput + ' ' + emailInput + ' data di nascita ' + dataNascitaInput);
 
     // nome e cognome devono essere immessi
     if (nameInput === '') {
         alert('Inserisci il nome');
-        document.getElementById('1name').focus();
+        document.getElementById('form1_name').focus();
         return false;
     }
 
     if (surnameInput === '') {
         alert('Inserisci il cognome');
-        document.getElementById('1surname').focus();
+        document.getElementById('form1_username').focus();
         return false;
     }
 
@@ -30,9 +33,10 @@ function generateAndDownloadPDF() {
         return false;
     }
 
-    // data di nascita
-    if (!dataNascitaInput === '') {
+    // data di nascita. E' immessa se il valore è diverso dal placeholder
+    if (dataNascitaInput === '') {
         alert('Data non selezionata');
+        document.getElementById('form1_birthday').focus();
         return false;
     }
 
@@ -53,6 +57,16 @@ function generateAndDownloadPDF() {
 }
 
 function formattaData(date) {
+    
+    var formattedDate;
+
+    // se la data non è immessa termina
+    if (date === "") {
+        console.log("eto was here");
+        formattedDate = "";
+        return formattedDate;
+    }
+
     var tmpDate = new Date(date);
 
     var giorno = tmpDate.getDay();
@@ -67,11 +81,15 @@ function formattaData(date) {
         mese = '0' + mese;
     }
 
-    var formattedDate;
-
     formattedDate = giorno + '/' + mese + '/' + anno;
 
     return formattedDate;
+}
+
+function controllaData(date) {
+    // al momento non serve....
+    return;
+
 }
 
 async function compilaPDF() {
