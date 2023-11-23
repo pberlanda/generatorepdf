@@ -5,9 +5,9 @@ function generateAndDownloadPDF() {
     emailInput = document.getElementById('form1_email').value;
 
     let dataNascitaInput;
-    dataNascitaInput = formattaData(document.getElementById('form1_birthday').value);
-
-    console.log(dataNascitaInput + ' checkpoint');
+    //dataNascitaInput = formattaData(document.getElementById('form1_birthday').value);
+    //dataNascitaInput = document.getElementById('form1_birthday').value;
+    dataNascitaInput = visualizzaData(document.getElementById('form1_birthday').value);
 
     // test in console
     console.log(nameInput + ' ' + surnameInput + ' ' + emailInput + ' data di nascita ' + dataNascitaInput);
@@ -33,7 +33,7 @@ function generateAndDownloadPDF() {
         return false;
     }
 
-    // data di nascita. E' immessa se il valore è diverso dal placeholder
+    // data di nascita deve essere immessa
     if (dataNascitaInput === '') {
         alert('Data non selezionata');
         document.getElementById('form1_birthday').focus();
@@ -62,7 +62,7 @@ function formattaData(date) {
 
     // se la data non è immessa termina
     if (date === "") {
-        console.log("eto was here");
+        console.log("eto was here " + date);
         formattedDate = "";
         return formattedDate;
     }
@@ -73,34 +73,75 @@ function formattaData(date) {
     var mese = tmpDate.getMonth() + 1;
     var anno = tmpDate.getFullYear();
 
-    if (giorno < 10) {
+    /*if (giorno < 10) {
         giorno = '0' + giorno;
     }
 
     if (mese < 10) {
         mese = '0' + mese;
-    }
+    }*/
+
+    console.log('giorno ' + giorno + ' mese ' + mese + ' anno ' + anno);
 
     formattedDate = giorno + '/' + mese + '/' + anno;
 
     return formattedDate;
 }
 
-function controllaData(date) {
-    // al momento non serve....
-    return;
+function visualizzaData(data) {
 
+    let tmpData = new Date(data);
+    let options = {day:'2-digit', month:'2-digit', year:'numeric'};
+    let dataFormatatta = tmpData.toLocaleDateString('it-IT', options);
+
+    return dataFormatatta;
 }
 
 async function compilaPDF() {
-    const name = document.getElementById('2name').value;
-    const surname = document.getElementById('2surname').value;
-    const email = document.getElementById('2email').value;
-    const luogoNascita = document.getElementById('2luogoNascita').value;
+    const name = document.getElementById('form2_name').value;
+    const surname = document.getElementById('form2_surname').value;
+    const email = document.getElementById('form2_email').value;
+    const luogoNascita = document.getElementById('form2_luogoNascita').value;
 
-    var tmpData = document.getElementById("2birthdate").value;
+    let dataNascita;
+    //dataNascita = formattaData(document.getElementById('form2_birthdate').value);
+    //dataNascita = document.getElementById('form2_birthdate').value;
+    dataNascita = visualizzaData(document.getElementById('form2_birthdate').value);
 
-    const dataNascita = formattaData(tmpData);
+    // nome e cognome devono essere immessi
+    if (name === '') {
+        alert('Inserisci il nome');
+        document.getElementById('form2_name').focus();
+        return false;
+    }
+
+    if (surname === '') {
+        alert('Inserisci il cognome');
+        document.getElementById('form2_surname').focus();
+        return false;
+    }
+
+    // email deve essere valida
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email.match(emailPattern)) {
+        alert('Email non immessa oppure non valida');
+        document.getElementById('form2_email').focus();
+        return false;
+    }
+
+    if (luogoNascita === '') {
+        alert('Inserisci il luogo di nascita');
+        document.getElementById('form2_luogoNascita').focus();
+        return false;
+    }
+
+    // data di nascita deve essere immessa
+    if (dataNascita === '') {
+        alert('Data non selezionata');
+        document.getElementById('form2_birthdate').focus();
+        return false;
+    }
 
     // Carica il modulo PDF da compilare
     const response = await fetch('modulo.pdf');
