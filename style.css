@@ -1,4 +1,7 @@
 /* Stili per il modulo e il responsive design */
+*{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 .container {
     max-width: 600px;
     margin: auto;;
