@@ -1,1 +1,1 @@
-questo progetto permette di generare file pdf da html
+questo progetto permette di generare file pdf da una pagina web
